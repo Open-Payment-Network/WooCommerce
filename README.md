@@ -8,7 +8,7 @@ This module enables the use of https://gateway.example.com payment gateway using
 COMPATIBILITY
 ------------
 
-Compatible with version 6.x of Woocommerce and upto 6.x of Wordpress.
+Compatible with version 10.x of Woocommerce and upto 6.x of Wordpress.
 
 REQUIREMENTS
 ------------
