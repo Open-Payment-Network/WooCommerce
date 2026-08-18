@@ -141,3 +141,48 @@ function delete_plugin_database_table()
 	//delete_option("my_plugin_db_version");
 	//error_log('Logging SQL table drop');
 }
+
+
+/*Block Editor Support*/
+
+add_action('before_woocommerce_init', function () {
+    if (
+        class_exists(
+            '\Automattic\WooCommerce\Utilities\FeaturesUtil'
+        )
+    ) {
+        \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility(
+            'cart_checkout_blocks',
+            __FILE__,
+            true
+        );
+    }
+});
+
+
+add_action(
+    'woocommerce_blocks_loaded',
+    function () {
+        if (
+            !class_exists(
+                '\Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodType'
+            )
+        ) {
+            return;
+        }
+
+        require_once __DIR__
+            . '/includes/class-wc-payment-network-blocks.php';
+
+        add_action(
+            'woocommerce_blocks_payment_method_type_registration',
+            function ($registry) {
+                $registry->register(
+                    new WC_Payment_Network_Blocks()
+                );
+            }
+        );
+    }
+);
+
+/* End Block Editor Support*/
